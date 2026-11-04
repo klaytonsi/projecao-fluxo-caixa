@@ -1,0 +1,6 @@
+# EN: generated data and secrets stay out of Git
+# PT: dados gerados e segredos ficam fora do Git
+data/
+.env
+__pycache__/
+.ipynb_checkpoints/
