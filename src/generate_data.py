@@ -29,7 +29,9 @@ def make_receivables(rng: np.random.Generator) -> pd.DataFrame:
     """
     # EN: late payment rate between 8% and 12% / PT: taxa de atraso entre 8% e 12%
     late_rate = rng.uniform(0.08, 0.12)
-    issue_day = rng.integers(0, DAYS, N_RECEIVABLES)
+    # EN: invoices issued up to 60 days before the start (company already operating)
+    # PT: faturas emitidas até 60 dias antes do início (empresa já em operação)
+    issue_day = rng.integers(-60, DAYS, N_RECEIVABLES)
     terms = rng.choice([30, 45, 60], N_RECEIVABLES)  # EN: payment terms / PT: prazos
     is_late = rng.random(N_RECEIVABLES) < late_rate
     delay = np.where(is_late, rng.integers(15, 91, N_RECEIVABLES), 0)
