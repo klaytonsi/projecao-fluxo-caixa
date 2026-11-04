@@ -92,6 +92,6 @@ def main() -> None:
 
     print_summary(receivables, payables)
 
-
-if __name__ == "__main__":
-    main()
+    # EN: output folder inside the cloned project (ignored by Git)
+    # PT: pasta de saída dentro do projeto clonado (ignorada pelo Git)
+    DATA_DIR = Path("data")
