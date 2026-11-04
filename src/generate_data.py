@@ -31,7 +31,7 @@ def make_receivables(rng: np.random.Generator) -> pd.DataFrame:
     late_rate = rng.uniform(0.08, 0.12)
     # EN: invoices issued up to 60 days before the start (company already operating)
     # PT: faturas emitidas até 60 dias antes do início (empresa já em operação)
-    issue_day = rng.integers(-60, DAYS, N_RECEIVABLES)
+    issue_day = rng.integers(-30, DAYS, N_RECEIVABLES)
     terms = rng.choice([30, 45, 60], N_RECEIVABLES)  # EN: payment terms / PT: prazos
     is_late = rng.random(N_RECEIVABLES) < late_rate
     delay = np.where(is_late, rng.integers(15, 91, N_RECEIVABLES), 0)
@@ -40,7 +40,7 @@ def make_receivables(rng: np.random.Generator) -> pd.DataFrame:
     clients = [f"Cliente {i:02d}" for i in range(1, N_CLIENTS + 1)]
     return pd.DataFrame({
         "client": rng.choice(clients, N_RECEIVABLES),
-        "amount": rng.uniform(200, 5000, N_RECEIVABLES).round(2),
+        "amount": rng.uniform(200, 4000, N_RECEIVABLES).round(2),
         "due_date": START + pd.to_timedelta(due_day, unit="D"),
         "paid_date": START + pd.to_timedelta(due_day + delay, unit="D"),
     })
