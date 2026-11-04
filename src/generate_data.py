@@ -16,8 +16,10 @@ N_PAYABLES = 1000        # EN: payables / PT: pagamentos
 DAYS = 365               # EN: 12 months / PT: 12 meses
 START = pd.Timestamp("2025-01-01")  # EN: start date / PT: data inicial
 OPENING_BALANCE = 50_000.00         # EN: fixed opening cash / PT: saldo inicial fixo
-# EN: output folder (ignored by Git) / PT: pasta de saída (ignorada pelo Git)
-DATA_DIR = Path(__file__).resolve().parents[1] / "data"
+
+# EN: output folder inside the cloned project (ignored by Git)
+# PT: pasta de saída dentro do projeto clonado (ignorada pelo Git)
+DATA_DIR = Path("data")
 
 
 def make_receivables(rng: np.random.Generator) -> pd.DataFrame:
@@ -92,6 +94,6 @@ def main() -> None:
 
     print_summary(receivables, payables)
 
-    # EN: output folder inside the cloned project (ignored by Git)
-    # PT: pasta de saída dentro do projeto clonado (ignorada pelo Git)
-    DATA_DIR = Path("data")
+
+if __name__ == "__main__":
+    main()
