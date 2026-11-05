@@ -97,16 +97,28 @@ def main() -> None:
     col3.metric("Menor saldo (base)", brl(summary.loc[0, "min_balance"]))
 
     st.subheader("Saldo projetado por semana")
-    st.line_chart(balance_chart(weekly))
+    # EN: axis labels make the chart readable
+    # PT: títulos nos eixos deixam o gráfico legível
+    st.line_chart(balance_chart(weekly), x_label="Semana", y_label="Saldo (R$)")
 
     st.subheader("Comparação dos cenários")
-    table = summary.rename(columns={
+    # EN: make sure the scenario names are a column, not a hidden index
+    # PT: garante que os nomes dos cenários sejam coluna, não índice escondido
+    table = summary.reset_index() if "scenario" not in summary.columns else summary.copy()
+    table = table.rename(columns={
+        "index": "scenario",
+        "scenario": "scenario",
+    }).rename(columns={
         "scenario": "Cenário",
         "critical_week": "Semana crítica",
         "weeks_negative": "Semanas negativas",
         "min_balance": "Menor saldo",
         "final_balance": "Saldo final",
     })
+    # EN: format money columns as BRL
+    # PT: formata as colunas de dinheiro em reais
+    for col in ("Menor saldo", "Saldo final"):
+        table[col] = table[col].map(brl)
     st.dataframe(table, hide_index=True, use_container_width=True)
 
 
